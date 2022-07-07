@@ -7,7 +7,7 @@ const removeById = async (req, res, next) => {
     if(!result) {
         throw createError(404);
     }
-    res.json({message:"Contact deleted"});
+    res.json({message:"contact deleted"});
 };
 
 module.exports = removeById;
