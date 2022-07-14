@@ -4,11 +4,11 @@ const validation = (schema) => {
         if (error) {
             error.status = 400;
             return next(error);
-        }
+        };
         next();
-    }
+    };
 
     return func;
-}
+};
 
 module.exports = validation;
