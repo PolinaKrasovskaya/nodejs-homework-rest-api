@@ -4,7 +4,7 @@ const ctrl = require("../../controllers/users");
 
 const { ctrlWrapper } = require("../../helpers");
 
-const { authenticate, validation } = require("../../middlewares");
+const { authenticate, validation, upload } = require("../../middlewares");
 
 const { schemas } = require("../../models/user");
 
@@ -20,5 +20,5 @@ router.get("/logout", authenticate, ctrlWrapper(ctrl.logout));
 
 router.patch("/:userId/subscription", authenticate, ctrlWrapper(ctrl.updateUserSubscription));
 
-router.patch("/avatars", authenticate, ctrlWrapper(ctrl.updateAvatar));
+router.patch("/avatars", authenticate, upload.single("avatar"), ctrlWrapper(ctrl.updateAvatar));
 module.exports = router;
