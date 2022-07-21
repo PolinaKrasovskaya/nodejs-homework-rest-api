@@ -1,9 +1,10 @@
 const bcrypt = require("bcryptjs");
 const gravatar = require("gravatar");
+const idGenerate = require("bson-objectid");
 
 const { User } = require("../../models/user");
 
-const { createError } = require("../../helpers");
+const { createError, sendMail } = require("../../helpers");
 
 const register = async(req, res)=> {
     const { email, password } = req.body;
@@ -13,13 +14,25 @@ const register = async(req, res)=> {
     };
     const hashPassword = await bcrypt.hash(password, 10);
     const avatarURL = gravatar.url.apply(email);
-    const result = await User.create({ ...req.body, password: hashPassword, avatarURL });
+    const verificationToken = idGenerate();
+    const result = await User.create({
+        ...req.body,
+        password: hashPassword,
+        avatarURL,
+        verificationToken
+    });
+    const mail = {
+        to: email,
+        subject: "Registration confirm",
+        html: `<a target="_blank" href="http://127.0.0.1:3000/api/users/verify/${verificationToken}">Click to confirm email</a>`
+    };
     res.status(201).json({
         user: {
             email: result.email,
             subscription: result.subscription,
         }
     })
+    await sendMail(mail);
 };
 
 module.exports = register;

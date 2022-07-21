@@ -12,7 +12,7 @@ const userSchema = Schema({
     email: {
         type: String,
         required: [true, 'Email is required'],
-        match: emailRegexp,
+        // match: emailRegexp,
         unique: true,
     },
     subscription: {
@@ -26,21 +26,33 @@ const userSchema = Schema({
     },
     avatarURL: {
         type: String,
-        // required: true,
+        required: true,
+    },
+    verify: {
+        type: Boolean,
+        default: false,
+      },
+    verificationToken: {
+        type: String,
+        required: [true, 'Verify token is required'],
     },
 }, {versionKey: false, timestamps: true});
 
 const User = model("user", userSchema);
 
 const user = Joi.object({
-    email: Joi.string().pattern(emailRegexp).required(),
+    email: Joi.string().required(),
     password: Joi.string().required(),
     subscription: Joi.string().valueOf(...subscription),
     token: Joi.string(),
 });
 
+const email = Joi.object({
+    email: Joi.string().required(),
+})
 const schemas = {
     user,
+    email,
 };
 
 module.exports = {
