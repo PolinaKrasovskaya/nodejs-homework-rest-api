@@ -5,7 +5,7 @@ require("dotenv").config();
 const app = require("../../app");
 const { User } = require("../../models/user");
 
-const {DB_HOST, PORT} = process.env;
+const {DB_TEST_HOST, PORT} = process.env;
 
 describe("test user routes", () => {
     let server;
@@ -13,7 +13,7 @@ describe("test user routes", () => {
     afterAll(()=> server.close());
 
     beforeEach((done)=> {
-        mongoose.connect(DB_HOST).then(() => done())
+        mongoose.connect(DB_TEST_HOST).then(() => done())
     });
 
     afterEach((done)=> {
@@ -22,21 +22,14 @@ describe("test user routes", () => {
         // })
     });
 
-    test("test login route", async() => {
+    test("test register route", async() => {
         const newUser = {
             email: 'qwea@gmail.com',
-            password: '123456'
+            password: '123456',
+            verificationToken: true,
         };
 
         const user = await User.create(newUser);
         console.log(user);
-
-        const loginUser = {
-            email: "qwea@gmail.com",
-            password: "123456"
-        };
-
-        const response = await request(app).post("/api/users/login").send(loginUser);
-        console.log(response);
     });
 });
