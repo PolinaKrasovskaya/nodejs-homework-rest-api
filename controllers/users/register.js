@@ -6,7 +6,7 @@ const { User } = require("../../models/user");
 
 const { createError, sendMail } = require("../../helpers");
 
-const register = async(req, res)=> {
+const register = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if(user) {
@@ -24,14 +24,14 @@ const register = async(req, res)=> {
     const mail = {
         to: email,
         subject: "Registration confirm",
-        html: `<a target="_blank" href="http://127.0.0.1:3000/api/users/verify/${verificationToken}">Click to confirm email</a>`
+        html: `<a target="_blank" href="http://localhost:3000/api/users/verify/${verificationToken}">Click to confirm email</a>`,
     };
     res.status(201).json({
         user: {
             email: result.email,
             subscription: result.subscription,
         }
-    })
+    });
     await sendMail(mail);
 };
 

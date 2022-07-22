@@ -12,13 +12,13 @@ const userSchema = Schema({
     email: {
         type: String,
         required: [true, 'Email is required'],
-        // match: emailRegexp,
+        match: emailRegexp,
         unique: true,
     },
     subscription: {
         type: String,
         enum: subscription,
-        default: "starter"
+        default: "starter",
     },
     token: {
         type: String,
@@ -41,14 +41,14 @@ const userSchema = Schema({
 const User = model("user", userSchema);
 
 const user = Joi.object({
-    email: Joi.string().required(),
+    email: Joi.string().pattern(emailRegexp).required(),
     password: Joi.string().required(),
     subscription: Joi.string().valueOf(...subscription),
     token: Joi.string(),
 });
 
 const email = Joi.object({
-    email: Joi.string().required(),
+    email: Joi.string().pattern(emailRegexp).required(),
 })
 const schemas = {
     user,

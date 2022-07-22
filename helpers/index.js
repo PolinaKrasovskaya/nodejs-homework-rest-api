@@ -6,4 +6,4 @@ module.exports = {
     createError,
     ctrlWrapper,
     sendMail,
-}
+};

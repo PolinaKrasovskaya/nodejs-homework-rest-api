@@ -15,5 +15,5 @@ module.exports = {
     updateUserSubscription,
     updateAvatar,
     verifyEmail,
-    resendVerifyEmail
+    resendVerifyEmail,
 };

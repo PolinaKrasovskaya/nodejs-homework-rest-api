@@ -11,6 +11,6 @@ const sendMail = async (data) => {
         .then(() => console.log("Email send success"))
         .catch(error => console.log(error.message));
     return true;
-}
+};
 
 module.exports = sendMail;
