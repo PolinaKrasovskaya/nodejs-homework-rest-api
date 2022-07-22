@@ -17,9 +17,7 @@ describe("test user routes", () => {
     });
 
     afterEach((done)=> {
-        // mongoose.connection.db.dropCollection(() => {
             mongoose.connection.close(() => done())
-        // })
     });
 
     test("test login route", async() => {
